@@ -7,84 +7,244 @@
 //
 
 import UIKit
+import CoreLocation
 
-class WeatherListViewController: UIViewController {
+class WeatherListViewController: UIViewController,UITableViewDelegate,UITableViewDataSource,CLLocationManagerDelegate{
     // creation of data
-    var datastores:[DataStore]=[]
-    
-    @IBOutlet weak var locationLabel: UILabel!
-    @IBOutlet weak var tableView: UITableView!
 
-    @IBOutlet weak var addNoteLabel: UILabel!
-    @IBOutlet weak var bgImage: UIImageView!
-    @IBOutlet weak var tempImage: UIImageView!
-    @IBOutlet weak var tempLabel: UILabel!
+    
+    @IBOutlet var table:UITableView!
+    
+    var models:[hourlyWeatherData] = []
+//    var models2:[dailyWeatherData] = []
+    
+//    var json:WeatherResponse?
+    
+    let locationManager=CLLocationManager()
+    
+    var currentLocation:CLLocation?
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Firing the data geneation method
-        datastores=createArray()
         
-        tableView.delegate = self
-        tableView.dataSource=self
-        addNoteLabel.text = "Add Notes"
-        addNoteLabel.textColor = UIColor(red: (22.0/255.0), green: (64.0/255.0), blue: (22.0/255.0), alpha: 1.0)
-        addNoteLabel.font = UIFont(name: "Marker Felt", size: 18)
-        self.bgImage.addSubview(locationLabel)
-        self.bgImage.addSubview(tempLabel)
-        self.bgImage.addSubview(tempImage)
-        self.bgImage.addSubview(addNoteLabel)
-        DemoReq()
-    }
-    
-    // Method that returns objects for corresponding data
-    func createArray() -> [DataStore]
-    {
-        // Array That holds Objects
-        var tempdatastores:[DataStore] = []
         
-        // Creation of Objects
-        let day1 = DataStore(dayofweek: "Monday", symbol: #imageLiteral(resourceName: "sunny-cloud"), maximumTempareture: "25°C" , minimumTempareture: "20°C" )
-        let day2 = DataStore(dayofweek: "Tuesday", symbol: #imageLiteral(resourceName: "windy"), maximumTempareture: "22°C" , minimumTempareture: "19°C" )
-        let day3 = DataStore(dayofweek: "Wednesday", symbol: #imageLiteral(resourceName: "thunder"), maximumTempareture: "23°C" , minimumTempareture: "13°C" )
-        let day4 = DataStore(dayofweek: "Thursday", symbol: #imageLiteral(resourceName: "tabBar_1"), maximumTempareture: "21°C" , minimumTempareture: "15°C" )
-        let day5 = DataStore(dayofweek: "Friday", symbol: #imageLiteral(resourceName: "sunny-cloud"), maximumTempareture: "19°C" , minimumTempareture: "17°C" )
-        let day6 = DataStore(dayofweek: "Saturday", symbol: #imageLiteral(resourceName: "windy"), maximumTempareture: "20°C" , minimumTempareture: "18°C" )
+        dailyWeatherData.dailyforcast(withLocation: "re") { (resuls:[dailyWeatherData]) in
+            for result in resuls{
+                print("\(result)\n\n")
+            }
 
-        tempdatastores.append(day1)
-        tempdatastores.append(day2)
-        tempdatastores.append(day3)
-        tempdatastores.append(day4)
-        tempdatastores.append(day5)
-        tempdatastores.append(day6)
-
-        return tempdatastores
-        
-    }
-    
-    // Function for requesting data from API,To apply this, Application Trnasport Security Applied Explicitly
-    func DemoReq()
-    {
-        let url = URL(string: "https://api.openweathermap.org/data/2.5/onecall?lat=-37.79746&lon=144.8717&exclude=hourly,daily&appid=54ba55c1be2e46294f88143ca6ca5eb9")!
-        
-        let task = URLSession.shared.dataTask(with: url) {(data, response, error) in
-            guard let data = data else { return }
-           print(String(data: data, encoding: .utf8)!)
         }
-        task.resume()
-    }
-}
+        
+        dailyWeatherDetails.dailydatedetails(withLocation: "re") { (resuls:[dailyWeatherDetails]) in
+            for result in resuls{
+                print("\(result)\n\n")
+            }
+            
+        }
 
-extension WeatherListViewController:UITableViewDelegate,UITableViewDataSource{
+        
+        table.register(HourlyTableViewCell.nib(), forCellReuseIdentifier: HourlyTableViewCell.identifier)
+        table.register(WeatherTableViewCell.nib(), forCellReuseIdentifier: WeatherTableViewCell.identifier)
+        
+        table.delegate = self
+        table.dataSource=self
+        
+
+
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+//        setuplocation()
+    }
+    
+    func setuplocation()
+    {
+        locationManager.delegate=self
+        locationManager.requestWhenInUseAuthorization()
+        locationManager.startUpdatingLocation()
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        if !locations.isEmpty,currentLocation == nil {
+            currentLocation = locations.first
+            locationManager.stopUpdatingLocation()
+           requestWeatherForLocation()
+        }
+    }
+    
+    func requestWeatherForLocation()
+    {
+        guard let currentLocation = currentLocation else
+        {
+            return
+        }
+        let long = currentLocation.coordinate.longitude
+        let lat = currentLocation.coordinate.latitude
+
+        let url = "https://api.openweathermap.org/data/2.5/onecall?lat=-37.79746&lon=144.8717&exclude=minutely&appid=54ba55c1be2e46294f88143ca6ca5eb9"
+
+       print ("\(long) | \(lat)")
+        URLSession.shared.dataTask(with: URL(string: url)!,completionHandler:{data,response,error in
+            guard let data = data,error == nil else {
+                print("Something Went Wrong")
+                return
+            }
+
+
+            var json:WeatherResponse?
+            do{
+                json = try JSONDecoder().decode(WeatherResponse.self,from: data)
+
+            } catch{
+                print ("error")
+
+            }
+
+            guard let result = json else {
+                return
+            }
+
+   let entries = result.hourly
+//            self.model.append(contentsOf:entries)
+
+//            var flatted = result.hourly.flatMap{ $0 }
+//             print(flatted[0])
+
+
+        }).resume()
+        
+        
+    }
+    
+
+
+    
+//    func forecast(withLocation location:String,completion:@escaping ([dailyWeatherDate],[dailyWeatherData]) -> ())
+//    {
+//        let url = "https://api.openweathermap.org/data/2.5/onecall?lat=-37.79746&lon=144.8717&exclude=minutely&appid=54ba55c1be2e46294f88143ca6ca5eb9"
+//
+//        let request = URLRequest(url:URL(string: url)!)
+//
+//        let task = URLSession.shared.dataTask(with: request) {(data:Data?,response:URLResponse?,error:Error?) in
+//
+//            var models123:[dailyWeatherDate] = []
+//            var models234:[dailyWeatherData] = []
+//
+//            if let data = data{
+//                do{
+//                    if let json = try JSONSerialization.jsonObject(with: data, options: []) as? [String:Any]{
+//                        if let dailyforcast = json["daily"] as? [String:Any]{
+//                            if let dailydata = dailyforcast["temp"] as? [[String:Any]]{
+//                                for datapoint in dailydata {
+//                                    if let weatherobject = try? dailyWeatherData(json: datapoint){
+//                                        models234.append(weatherobject)
+//                                    }
+//                                }
+//                            }
+//
+//                        }
+//
+//                    }
+//
+//                }catch{
+//                    print(error.localizedDescription)
+//
+//                }
+//
+//                completion(models123,models234)
+//            }
+//
+//        }
+//
+//        task.resume()
+//
+//    }
+    
+    
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // count number of rows in table view
-        return datastores.count
+        return models.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let dataall = datastores[indexPath.row]
-        let cell=tableView.dequeueReusableCell(withIdentifier: "WeatherCell") as! WeatherCell
-        cell.setDataStore(data: dataall)
-        return cell
+        return UITableViewCell()
     }
+    
+
 }
+
+
+struct WeatherResponse:Decodable{
+    let lat:Double
+    let lon:Double
+    let timezone:String
+    let timezone_offset:Double
+    let current:currentWeather
+    let hourly:[hourlyWeather]
+//    let daily:[dailyWeather]
+}
+struct currentWeather:Codable{
+    let dt:Double
+    let sunrise:Double
+    let sunset:Double
+    let temp:Double
+    let feels_like:Double
+    let pressure:Double
+    let humidity:Double
+    let dew_point:Double
+    let uvi:Double
+    let clouds:Double
+    let visibility:Double
+    let wind_speed:Double
+    let wind_deg:Double
+    let weather:[WeatherData]
+    
+}
+
+struct WeatherData:Codable{
+    let id:Double
+    let main:String
+    let description:String
+    let icon:String
+
+}
+
+struct hourlyWeather:Codable{
+    
+    let dt:Double
+
+    let temp:Double
+
+    let feels_like:Double
+
+    let pressure:Double
+
+    let humidity:Double
+
+    let dew_point:Double
+
+    let clouds:Double
+
+    let visibility:Double
+
+    let wind_speed:Double
+
+    let wind_deg:Double
+
+    let weather:[hourlyWeatherData]
+    let pop:Double
+    
+}
+struct hourlyWeatherData:Codable{
+    let id:Double
+    let main:String
+    let description:String
+    let icon:String
+}
+
+struct dailyWeather:Codable{
+    
+}
+
+
