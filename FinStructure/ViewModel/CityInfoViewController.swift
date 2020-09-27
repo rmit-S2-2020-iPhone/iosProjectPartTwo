@@ -15,15 +15,31 @@ protocol SaveCityDelegate{
 
 class CityInfoViewController: UIViewController {
 
-    @IBOutlet weak var cityInfoNameLabel: UILabel!
-    @IBOutlet weak var weatherLabel: UILabel!
+    //top label for city weather condition in text eg: cloudy, sunny, rainy
+    @IBOutlet weak var cityInfoWeatherCondition: UILabel!
+    // image represents the current weather
     @IBOutlet weak var cityInfoWeatherImageView: UIImageView!
-    @IBOutlet weak var saveButton: UIButton!
-    @IBOutlet weak var tempLabel: UILabel!
-    @IBOutlet weak var minTempLabel: UILabel!
-    @IBOutlet weak var maxTempLabel: UILabel!
-    @IBAction func saveCityBtn(_ sender: UIButton) {
+    
+    //outlet for save button, it's used to hide the button after user clicked SAVED
+    @IBOutlet weak var saveCityBtn: UIButton!
+    
+    // Weather details on the left side of the screen
+    //Current temperature
+    @IBOutlet weak var cityInfoTemp: UILabel!
+    //Today high temp
+    @IBOutlet weak var cityInfoHighTemp: UILabel!
+    //Today low temp
+    @IBOutlet weak var cityInfoLowTemp: UILabel!
+    
+    //Weather details on the right side of the screen
+    @IBOutlet weak var cityDetailsFeelsLike: UILabel!
+    @IBOutlet weak var cityDetailsHumidity: UILabel!
+    @IBOutlet weak var cityDetailsWind: UILabel!
+    @IBOutlet weak var cityDetailsVisibility: UILabel!
+    
+    @IBAction func saveCityBtn(_ sender: Any) {
         saveCity()
+        self.navigationController?.popViewController(animated: true)
     }
     
     var city: City?
@@ -32,25 +48,31 @@ class CityInfoViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        saveButton.setTitle("Save", for: .normal)
-        saveButton.setTitleColor(.white, for: .normal)
-        saveButton.titleLabel?.font = UIFont(name: "Marker Felt", size: 18)
         setUI()
     }
     
+    //Passing the weather information to screen
     func setUI() {
-        cityInfoNameLabel.text = city?.name
-        weatherLabel.text = city?.weather
+        navigationItem.title = city?.name
+        cityInfoWeatherCondition.text = city?.weatherCondition
         cityInfoWeatherImageView.image = city?.weatherImage
-        let temp = city?.maxTemp.description
-        tempLabel.text = "TEMPATURE  " + temp! + "°C"
-        let temp1 = city?.minTemp.description
-        minTempLabel.text = "▼" + temp1! + "°C"
-        maxTempLabel.text = "▲" + temp! + "°C"
+        
+        cityInfoTemp.text = "\(city?.currentTemp ?? 0)°"
+        cityInfoLowTemp.text = "\(city?.minTemp ?? 0)"
+        cityInfoHighTemp.text = "\(city?.maxTemp ?? 0)"
+        
+        cityDetailsFeelsLike.text = "\(city?.feelsLike ?? 0)°C"
+        cityDetailsHumidity.text = "\(city?.humidity ?? 0)%"
+        cityDetailsWind.text = "\(city?.windSpeed ?? 0)km/h"
+        cityDetailsVisibility.text = "\(city?.visibility ?? 0)km"
+        
+        if (city?.saved == true ){
+            saveCityBtn.isHidden = true
+        }
     }
     
-    @objc func saveCity() {
+    func saveCity() {
+        city?.saved = true
         saveDelegate?.saveCityToList(savedCity: city!)
-        self.navigationController?.popViewController(animated: true)
     }
 }
