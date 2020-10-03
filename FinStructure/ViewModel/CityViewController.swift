@@ -2,7 +2,7 @@
 //  CityViewController.swift
 //  FinStructure
 //
-//  Created by Rakibul Hasan on 20/8/20.
+//  Created by Louis An on 20/8/20.
 //  Copyright © 2020 Rakibul Hasan. All rights reserved.
 //
 
@@ -36,13 +36,17 @@ class CityViewController: UIViewController{
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         //there maybe multuple segue from a screen, this is to identify the correct segue
         if segue.identifier == "CityInfoSegue" {
-            //set destination to the correct ViewController
+            //set destination to the correct ViewControllerΩ
             let destVC = segue.destination as! CityInfoViewController
             destVC.city = sender as? City
             destVC.saveDelegate = self
         }
     }
 }
+
+
+
+// MARK: UITableViewDelegate, UITableViewDataSource
 
 extension CityViewController: UITableViewDelegate, UITableViewDataSource {
     
@@ -112,7 +116,8 @@ extension CityViewController: UITableViewDelegate, UITableViewDataSource {
 }
 
 
-//Search function
+// MARK: UISearchBArDelegate, UITextFieldDelegate
+
 extension CityViewController: UISearchBarDelegate, UITextFieldDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         //click 'x' button on searchBar will show savedCity array rather than the whole citiesArray
@@ -147,15 +152,13 @@ extension CityViewController: UISearchBarDelegate, UITextFieldDelegate {
 }
 
 
-//Data passed back from cityInfoVC
 
+// MARK: SaveCityDelegate
 extension CityViewController: SaveCityDelegate {
     func saveCityToList(savedCity: City) {
         savedCityArray.append(savedCity)
         cityTableView.reloadData()
     }
-//Can be implemented using unwind
-
 }
 
 
