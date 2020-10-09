@@ -13,7 +13,6 @@ struct CityData: Codable {
     let daily: [Daily]
 }
 
-
 struct Current: Codable {
     let temp: Double
     let weather: [Weather]
@@ -30,8 +29,8 @@ struct Weather: Codable {
 
 struct Daily: Codable {
     let temp: Temp
+    let weather: [Weather]
 }
-
 
 struct Temp: Codable {
     let min: Double
