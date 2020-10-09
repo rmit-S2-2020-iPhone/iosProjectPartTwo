@@ -9,12 +9,12 @@
 import UIKit
 
 //Setting up protocol to send weather data back to CityVC
-protocol SaveCityDelegate{
-    func saveCityToList(savedCity: City)
-}
+//protocol SaveCityDelegate{
+//    func saveCityToList(savedCity: CityModel)
+//}
 
 class CityInfoViewController: UIViewController {
-
+    
     //top label for city weather condition in text eg: cloudy, sunny, rainy
     @IBOutlet weak var cityInfoWeatherCondition: UILabel!
     // image represents the current weather
@@ -37,25 +37,34 @@ class CityInfoViewController: UIViewController {
     @IBOutlet weak var cityDetailsWind: UILabel!
     @IBOutlet weak var cityDetailsVisibility: UILabel!
     
-    @IBAction func saveCityBtn(_ sender: Any) {
-        saveCity()
-        self.navigationController?.popViewController(animated: true)
+    var city: CityModel?
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "UnwindToOneSegue" {
+            let destVC = segue.destination as! CityViewController
+            self.city?.saved = true
+            destVC.city = self.city
+        }
+        
     }
     
-    var city: City?
+    @IBAction func saveCityBtn(_ sender: Any) {
+        performSegue(withIdentifier: "UnwindToOneSegue", sender: self)
+        print(city!.saved)
+    }
     
-    var saveDelegate: SaveCityDelegate?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setUI()
+        
     }
     
     //Passing the weather information to screen
     func setUI() {
         navigationItem.title = city?.name
-        cityInfoWeatherCondition.text = city?.weatherCondition
-        cityInfoWeatherImageView.image = city?.weatherImage
+        cityInfoWeatherCondition.text = city?.description
+        cityInfoWeatherImageView.image = UIImage(named: city!.weatherCondition)
         
         cityInfoTemp.text = "\(city?.currentTemp ?? 0)°"
         cityInfoLowTemp.text = "\(city?.minTemp ?? 0)"
@@ -70,9 +79,14 @@ class CityInfoViewController: UIViewController {
             saveCityBtn.isHidden = true
         }
     }
-    
-    func saveCity() {
-        city?.saved = true
-        saveDelegate?.saveCityToList(savedCity: city!)
-    }
 }
+
+
+
+// MARK: Prepare for unwind segue
+extension CityInfoViewController {
+    
+}
+
+
+

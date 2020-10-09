@@ -21,7 +21,6 @@ class WeatherListViewController: UIViewController,UITableViewDelegate,UITableVie
 //    var json:WeatherResponse?
     
     let locationManager=CLLocationManager()
-    
     var currentLocation:CLLocation?
     
     override func viewDidLoad() {
