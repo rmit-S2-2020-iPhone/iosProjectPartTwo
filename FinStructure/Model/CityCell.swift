@@ -15,9 +15,9 @@ class CityCell: UITableViewCell {
     @IBOutlet weak var cityWeatherImageView: UIImageView!
     
     
-    func setCity(city: City){
+    func setCity(city: CityModel){
         cityNameLabel.text = city.name
-        cityWeatherImageView.image = city.weatherImage
+        cityWeatherImageView.image = UIImage(named: city.weatherCondition)
         cityTempLabel.text = String(city.currentTemp) + "°C"
     }
 }
