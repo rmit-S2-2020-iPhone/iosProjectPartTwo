@@ -27,7 +27,6 @@ class SearchCityViewController: UIViewController {
         if segue.identifier == "SearchCityInfoSegue" {
             let destVC = segue.destination as! CityInfoViewController
             destVC.city = sender as? CityModel
-            //destVC.saveDelegate = self
         }
     }
 }
@@ -108,6 +107,7 @@ extension SearchCityViewController: UISearchBarDelegate, UITextFieldDelegate {
 
 // MARK: WeatherManagerDelegate
 extension SearchCityViewController: WeatherManagerDelegate {
+
     func didUpdateWeather(_ weatherManager: WeatherManager, weather: CityModel) {
         DispatchQueue.main.sync {
             searchArray.append(weather)
@@ -117,6 +117,12 @@ extension SearchCityViewController: WeatherManagerDelegate {
     
     func didFailWithError(error: Error) {
         print(error)
+        let alert = UIAlertController(title: "City Not Found", message: "Please search for another city.",         preferredStyle: UIAlertController.Style.alert)
+        alert.addAction(UIAlertAction(title: "Try again", style: UIAlertAction.Style.default, handler: { _ in
+            //Cancel Action
+        }))
+        self.present(alert, animated: true, completion: nil)
+        
     }
 
 }

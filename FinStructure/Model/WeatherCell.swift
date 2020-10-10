@@ -9,18 +9,11 @@
 import UIKit
 
 class WeatherCell: UITableViewCell {
-    // Connection with labels and views
-    @IBOutlet weak var weatherImageView: UIImageView!
-    @IBOutlet weak var dayName: UILabel!
-    @IBOutlet weak var maxTemp: UILabel!
-    @IBOutlet weak var minTemp: UILabel!
     
-    // function for datahandler
-    func setDataStore(data:DataStore)
-    {
-        dayName.text=data.dayofweek
-        weatherImageView.image=data.symbol
-        maxTemp.text=data.maximumTempareture
-        minTemp.text=data.minimumTempareture
-    }
+    @IBOutlet weak var dayLabel: UILabel!
+    @IBOutlet weak var weatherImage: UIImageView!
+    @IBOutlet weak var minTempLabel: UILabel!
+    @IBOutlet weak var maxTempLabel: UILabel!
+    
+    
 }

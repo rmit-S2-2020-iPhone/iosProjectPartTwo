@@ -16,7 +16,7 @@ class CityCell: UITableViewCell {
     
     
     func setCity(city: CityModel){
-        cityNameLabel.text = city.name
+        cityNameLabel.text = city.name.capitalized
         cityWeatherImageView.image = UIImage(named: city.weatherCondition)
         cityTempLabel.text = String(city.currentTemp) + "°C"
     }

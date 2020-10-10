@@ -9,241 +9,111 @@
 import UIKit
 import CoreLocation
 
-class WeatherListViewController: UIViewController,UITableViewDelegate,UITableViewDataSource,CLLocationManagerDelegate{
-    // creation of data
+class WeatherListViewController: UIViewController,UITableViewDelegate,UITableViewDataSource,WeatherManagerDelegate{
+  
+    
 
-    
     @IBOutlet var table:UITableView!
+    @IBOutlet weak var cityNameLabel: UILabel!
+    @IBOutlet weak var currentTempLabel: UILabel!
+    @IBOutlet weak var minTempLabel: UILabel!
+    @IBOutlet weak var maxTempLabel: UILabel!
+    @IBOutlet weak var weatherImage: UIImageView!
     
-    var models:[hourlyWeatherData] = []
-//    var models2:[dailyWeatherData] = []
+    var models:[CityModel] = []
     
-//    var json:WeatherResponse?
+    var dailyData: [CityModel.Daily] = []
     
-    let locationManager=CLLocationManager()
-    var currentLocation:CLLocation?
+    var weatherManager = WeatherManager()
+    let locationManager = CLLocationManager()
+
+    @IBAction func addNoteBtn(_ sender: UIButton) {
+        let appDelegate  = UIApplication.shared.delegate as! AppDelegate
+        let tabBarController = appDelegate.window!.rootViewController as! UITabBarController
+        tabBarController.selectedIndex = 2
+    }
+    
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        
-        dailyWeatherData.dailyforcast(withLocation: "re") { (resuls:[dailyWeatherData]) in
-            for result in resuls{
-                print("\(result)\n\n")
-            }
-
-        }
-        
-        dailyWeatherDetails.dailydatedetails(withLocation: "re") { (resuls:[dailyWeatherDetails]) in
-            for result in resuls{
-                print("\(result)\n\n")
-            }
-            
-        }
-
-        
-        table.register(HourlyTableViewCell.nib(), forCellReuseIdentifier: HourlyTableViewCell.identifier)
-        table.register(WeatherTableViewCell.nib(), forCellReuseIdentifier: WeatherTableViewCell.identifier)
-        
+        weatherManager.delegate = self
         table.delegate = self
         table.dataSource=self
         
-
-
+        //Ask user permission to use their location for privacy purposes
+        locationManager.delegate = self
+        locationManager.requestWhenInUseAuthorization()
+        locationManager.requestLocation()
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-//        setuplocation()
+        print(models)
     }
     
-    func setuplocation()
-    {
-        locationManager.delegate=self
-        locationManager.requestWhenInUseAuthorization()
-        locationManager.startUpdatingLocation()
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 50
     }
-    
-    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        if !locations.isEmpty,currentLocation == nil {
-            currentLocation = locations.first
-            locationManager.stopUpdatingLocation()
-           requestWeatherForLocation()
-        }
-    }
-    
-    func requestWeatherForLocation()
-    {
-        guard let currentLocation = currentLocation else
-        {
-            return
-        }
-        let long = currentLocation.coordinate.longitude
-        let lat = currentLocation.coordinate.latitude
-
-        let url = "https://api.openweathermap.org/data/2.5/onecall?lat=-37.79746&lon=144.8717&exclude=minutely&appid=54ba55c1be2e46294f88143ca6ca5eb9"
-
-       print ("\(long) | \(lat)")
-        URLSession.shared.dataTask(with: URL(string: url)!,completionHandler:{data,response,error in
-            guard let data = data,error == nil else {
-                print("Something Went Wrong")
-                return
-            }
-
-
-            var json:WeatherResponse?
-            do{
-                json = try JSONDecoder().decode(WeatherResponse.self,from: data)
-
-            } catch{
-                print ("error")
-
-            }
-
-            guard let result = json else {
-                return
-            }
-
-   let entries = result.hourly
-//            self.model.append(contentsOf:entries)
-
-//            var flatted = result.hourly.flatMap{ $0 }
-//             print(flatted[0])
-
-
-        }).resume()
-        
-        
-    }
-    
-
-
-    
-//    func forecast(withLocation location:String,completion:@escaping ([dailyWeatherDate],[dailyWeatherData]) -> ())
-//    {
-//        let url = "https://api.openweathermap.org/data/2.5/onecall?lat=-37.79746&lon=144.8717&exclude=minutely&appid=54ba55c1be2e46294f88143ca6ca5eb9"
-//
-//        let request = URLRequest(url:URL(string: url)!)
-//
-//        let task = URLSession.shared.dataTask(with: request) {(data:Data?,response:URLResponse?,error:Error?) in
-//
-//            var models123:[dailyWeatherDate] = []
-//            var models234:[dailyWeatherData] = []
-//
-//            if let data = data{
-//                do{
-//                    if let json = try JSONSerialization.jsonObject(with: data, options: []) as? [String:Any]{
-//                        if let dailyforcast = json["daily"] as? [String:Any]{
-//                            if let dailydata = dailyforcast["temp"] as? [[String:Any]]{
-//                                for datapoint in dailydata {
-//                                    if let weatherobject = try? dailyWeatherData(json: datapoint){
-//                                        models234.append(weatherobject)
-//                                    }
-//                                }
-//                            }
-//
-//                        }
-//
-//                    }
-//
-//                }catch{
-//                    print(error.localizedDescription)
-//
-//                }
-//
-//                completion(models123,models234)
-//            }
-//
-//        }
-//
-//        task.resume()
-//
-//    }
-    
-    
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return models.count
+        return dailyData.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        return UITableViewCell()
+        let cell = tableView.dequeueReusableCell(withIdentifier: "weatherCell", for: indexPath) as! WeatherCell
+        //let day = dailyData[indexPath.row]
+        cell.dayLabel.text = dailyData[indexPath.row].daysInWeek
+        cell.maxTempLabel.text = String(dailyData[indexPath.row].temp[0])
+        cell.minTempLabel.text = String(dailyData[indexPath.row].temp[1])
+        cell.weatherImage.image = UIImage(named: dailyData[indexPath.row].dailyImage)
+        return cell
+    }
+
+
+    
+    //WeatherManagerDelegate
+    func didUpdateWeather(_ weatherManager: WeatherManager, weather: CityModel) {
+        DispatchQueue.main.sync {
+            
+            //append data to models for showing current weather
+            models.append(weather)
+            print(models)
+          
+            //append data to dailyData to show 7 days forecast weather
+            dailyData = weather.daily
+            table.reloadData()
+        
+        
+            cityNameLabel.text = models[0].name
+            currentTempLabel.text = "\(models[0].currentTemp)°C"
+            minTempLabel.text = "\(models[0].minTemp)°C"
+            maxTempLabel.text = "\(models[0].maxTemp)°C"
+            weatherImage.image = UIImage(named: models[0].weatherCondition)
+        }
     }
     
-
-}
-
-
-struct WeatherResponse:Decodable{
-    let lat:Double
-    let lon:Double
-    let timezone:String
-    let timezone_offset:Double
-    let current:currentWeather
-    let hourly:[hourlyWeather]
-//    let daily:[dailyWeather]
-}
-struct currentWeather:Codable{
-    let dt:Double
-    let sunrise:Double
-    let sunset:Double
-    let temp:Double
-    let feels_like:Double
-    let pressure:Double
-    let humidity:Double
-    let dew_point:Double
-    let uvi:Double
-    let clouds:Double
-    let visibility:Double
-    let wind_speed:Double
-    let wind_deg:Double
-    let weather:[WeatherData]
+    func didFailWithError(error: Error) {
+        print(error)
+    }
     
 }
 
-struct WeatherData:Codable{
-    let id:Double
-    let main:String
-    let description:String
-    let icon:String
+// MARK: CLLLocationManagerDelegate
 
-}
-
-struct hourlyWeather:Codable{
+extension WeatherListViewController: CLLocationManagerDelegate {
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        if let location = locations.last {
+            let lat = location.coordinate.latitude
+            let lon = location.coordinate.longitude
+            print("Latitude: \(lat) - Longtitude: \(lon)")
+            weatherManager.fetchWeather(latitude: lat, longitude: lon)
+        }
+    }
     
-    let dt:Double
+    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+        print("Error")
+    }
 
-    let temp:Double
-
-    let feels_like:Double
-
-    let pressure:Double
-
-    let humidity:Double
-
-    let dew_point:Double
-
-    let clouds:Double
-
-    let visibility:Double
-
-    let wind_speed:Double
-
-    let wind_deg:Double
-
-    let weather:[hourlyWeatherData]
-    let pop:Double
-    
 }
-struct hourlyWeatherData:Codable{
-    let id:Double
-    let main:String
-    let description:String
-    let icon:String
-}
-
-struct dailyWeather:Codable{
-    
-}
-
-

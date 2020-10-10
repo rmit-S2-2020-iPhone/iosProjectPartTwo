@@ -14,6 +14,7 @@ struct CityData: Codable {
 }
 
 struct Current: Codable {
+    let dt: Int
     let temp: Double
     let weather: [Weather]
     let feels_like: Double
@@ -28,6 +29,7 @@ struct Weather: Codable {
 }
 
 struct Daily: Codable {
+    let dt: Int
     let temp: Temp
     let weather: [Weather]
 }

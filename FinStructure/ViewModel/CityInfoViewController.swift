@@ -76,7 +76,8 @@ class CityInfoViewController: UIViewController {
         cityDetailsVisibility.text = "\(city?.visibility ?? 0)km"
         
         if (city?.saved == true ){
-            saveCityBtn.isHidden = true
+            saveCityBtn.isEnabled = false
+            saveCityBtn.imageView?.image = #imageLiteral(resourceName: "saveBtn-disabled")
         }
     }
 }
