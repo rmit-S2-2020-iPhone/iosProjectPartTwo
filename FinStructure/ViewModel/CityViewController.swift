@@ -71,7 +71,13 @@ extension CityViewController: UITableViewDelegate, UITableViewDataSource {
     //set number of rows
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
             //return saved city array
-            return savedCityArray.count
+        if savedCityArray.count == 0 {
+            tableView.setEmptyMessage("Click on the 'Maginifying glass' to start searching for a city.")
+        } else {
+            tableView.restore()
+        }
+        
+        return savedCityArray.count
     }
     
     
@@ -111,9 +117,30 @@ extension CityViewController: UITableViewDelegate, UITableViewDataSource {
                 let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
                 alertController.addAction(cancelAction)
                 present(alertController, animated: true, completion: nil)
-            
         }
     }
 }
 
 
+
+//Setting up a view when there is no data in the CityViewController UITableView
+extension UITableView {
+    
+    func setEmptyMessage(_ message: String) {
+        let messageLabel = UILabel(frame: CGRect(x: 0, y: 0, width: self.bounds.size.width, height: self.bounds.size.height))
+        messageLabel.text = message
+        messageLabel.textColor = .black
+        messageLabel.numberOfLines = 0
+        messageLabel.textAlignment = .center
+        messageLabel.font = UIFont(name: "System", size: 20)
+        messageLabel.sizeToFit()
+        
+        self.backgroundView = messageLabel
+        self.separatorStyle = .none
+    }
+    
+    func restore() {
+        self.backgroundView = nil
+        self.separatorStyle = .singleLine
+    }
+}
