@@ -10,25 +10,54 @@ import XCTest
 @testable import FinStructure
 
 class FinStructureTests: XCTestCase {
-
-    override func setUp() {
-        // Put setup code here. This method is called before the invocation of each test method in the class.
+    
+    //Test Case 1
+    
+    func test1(){
+        //Test Initialization
+        let testNo1 = WeatherManager()
+        //Test Outcome
+        let result1 = testNo1.fetchWeather(latitude: 122, longitude: 34)
+        //Assertion
+        XCTAssertNotNil(result1)
+        
     }
-
-    override func tearDown() {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
+    
+    
+    //Test Case 2
+    func test2(){
+        //Test Initialization
+        let testNo4=WeatherManager()
+        //Test Outcome
+        let result=testNo4.fetchWeather(cityName: "Sydney")
+        //Assertion
+        XCTAssertNotNil(result)
+        
     }
-
-    func testExample() {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
+    
+    //Test Case 3
+    func test3(){
+        //Test Initialization
+        let testNo3=WeatherManager()
+        let URL="https://api.openweathermap.org/data/2.5/onecall?appid=54ba55c1be2e46294f88143ca6ca5eb9&units=metric&exclude=minutely,hourly,alerts"
+        //Test Outcome
+        let result3=testNo3.performRequest(with: URL, city: "Melbourne")
+        //Assertion
+        XCTAssertNotNil(result3)
+        
     }
-
-    func testPerformanceExample() {
-        // This is an example of a performance test case.
-        self.measure {
-            // Put the code you want to measure the time of here.
-        }
+    
+    //Test Case 4
+    func test4(){
+        //Test Initialization
+        
+        let testNo2=WeatherManager()
+        //Test Outcome
+        let result1=testNo2.fetchWeather(latitude: 122, longitude: -34)
+        //Assertion
+        XCTAssertTrue(true)
+        
     }
-
+    
+    
 }

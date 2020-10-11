@@ -141,6 +141,7 @@
 				3B67172324EE83B6003750B5 /* View */,
 				3B67172224EE83AB003750B5 /* Model */,
 				3B6716EE24EE6BC7003750B5 /* AppDelegate.swift */,
+				FC0FB8842532924D00A53278 /* NotesInfo.xcdatamodeld */,
 				FC0FB8AD2532A8C700A53278 /* CoreData.swift */,
 				3B6716F724EE6BCA003750B5 /* Assets.xcassets */,
 				3B6716FC24EE6BCA003750B5 /* Info.plist */,
@@ -176,7 +177,6 @@
 				FCA72E292528514400BFB276 /* WeatherManager.swift */,
 				FC0FB8B12532AAB500A53278 /* NotesTableViewCell.swift */,
 				0AD44FE324F685F100642325 /* NotesModel.swift */,
-				FC0FB8842532924D00A53278 /* NotesInfo.xcdatamodeld */,
 				FC0FB8B72533157B00A53278 /* CityInfoCell.swift */,
 			);
 			path = Model;

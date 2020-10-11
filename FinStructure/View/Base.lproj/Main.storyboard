@@ -1403,7 +1403,7 @@
                                 <rect key="frame" x="448" y="44" width="404" height="300"/>
                                 <subviews>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo-text" translatesAutoresizingMaskIntoConstraints="NO" id="TjS-hE-HFj">
-                                        <rect key="frame" x="58" y="75" width="288" height="150"/>
+                                        <rect key="frame" x="58" y="75" width="288" height="150.00000000000006"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="288" id="3kB-QP-nIl"/>
                                             <constraint firstAttribute="height" constant="150" id="oL9-TW-SQC"/>
