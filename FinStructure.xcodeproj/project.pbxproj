@@ -26,11 +26,10 @@
 		FC0FB8872532924D00A53278 /* NotesInfo.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = FC0FB8842532924D00A53278 /* NotesInfo.xcdatamodeld */; };
 		FC0FB8882532924D00A53278 /* NotesInfo.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = FC0FB8842532924D00A53278 /* NotesInfo.xcdatamodeld */; };
 		FC0FB8AE2532A8C700A53278 /* CoreData.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC0FB8AD2532A8C700A53278 /* CoreData.swift */; };
-		FC0FB8AF2532A8C700A53278 /* CoreData.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC0FB8AD2532A8C700A53278 /* CoreData.swift */; };
-		FC0FB8B02532A8C700A53278 /* CoreData.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC0FB8AD2532A8C700A53278 /* CoreData.swift */; };
 		FC0FB8B22532AAB500A53278 /* NotesTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC0FB8B12532AAB500A53278 /* NotesTableViewCell.swift */; };
 		FC0FB8B32532AAB500A53278 /* NotesTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC0FB8B12532AAB500A53278 /* NotesTableViewCell.swift */; };
 		FC0FB8B42532AAB500A53278 /* NotesTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC0FB8B12532AAB500A53278 /* NotesTableViewCell.swift */; };
+		FC0FB8B62532C30800A53278 /* OnBoardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC0FB8B52532C30800A53278 /* OnBoardingViewController.swift */; };
 		FC79020924F0C2E30063DE3F /* CityCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC79020824F0C2E30063DE3F /* CityCell.swift */; };
 		FC79020B24F0C5D30063DE3F /* CityInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC79020A24F0C5D30063DE3F /* CityInfoViewController.swift */; };
 		FC79020D24F0D2E90063DE3F /* CityModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC79020C24F0D2E90063DE3F /* CityModel.swift */; };
@@ -80,6 +79,7 @@
 		FC0FB8852532924D00A53278 /* DataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DataModel.xcdatamodel; sourceTree = "<group>"; };
 		FC0FB8AD2532A8C700A53278 /* CoreData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreData.swift; sourceTree = "<group>"; };
 		FC0FB8B12532AAB500A53278 /* NotesTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotesTableViewCell.swift; sourceTree = "<group>"; };
+		FC0FB8B52532C30800A53278 /* OnBoardingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnBoardingViewController.swift; sourceTree = "<group>"; };
 		FC79020824F0C2E30063DE3F /* CityCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CityCell.swift; path = FinStructure/Model/CityCell.swift; sourceTree = SOURCE_ROOT; };
 		FC79020A24F0C5D30063DE3F /* CityInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CityInfoViewController.swift; sourceTree = "<group>"; };
 		FC79020C24F0D2E90063DE3F /* CityModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CityModel.swift; sourceTree = "<group>"; };
@@ -139,6 +139,7 @@
 				3B67172324EE83B6003750B5 /* View */,
 				3B67172224EE83AB003750B5 /* Model */,
 				3B6716EE24EE6BC7003750B5 /* AppDelegate.swift */,
+				FC0FB8AD2532A8C700A53278 /* CoreData.swift */,
 				3B6716F724EE6BCA003750B5 /* Assets.xcassets */,
 				3B6716FC24EE6BCA003750B5 /* Info.plist */,
 			);
@@ -173,7 +174,6 @@
 				FCA72E292528514400BFB276 /* WeatherManager.swift */,
 				FC0FB8B12532AAB500A53278 /* NotesTableViewCell.swift */,
 				0AD44FE324F685F100642325 /* NotesModel.swift */,
-				FC0FB8AD2532A8C700A53278 /* CoreData.swift */,
 				FC0FB8842532924D00A53278 /* NotesInfo.xcdatamodeld */,
 			);
 			path = Model;
@@ -199,6 +199,7 @@
 				0AD44FE524F6863F00642325 /* AddNotesViewController.swift */,
 				0AD44FE724F6867200642325 /* NotesInfoViewController.swift */,
 				0A50A93925015D3600A48021 /* EditNotesViewController.swift */,
+				FC0FB8B52532C30800A53278 /* OnBoardingViewController.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -338,6 +339,7 @@
 				FCA72E2A2528514400BFB276 /* WeatherManager.swift in Sources */,
 				0AD44FE624F6863F00642325 /* AddNotesViewController.swift in Sources */,
 				FC0FB8AE2532A8C700A53278 /* CoreData.swift in Sources */,
+				FC0FB8B62532C30800A53278 /* OnBoardingViewController.swift in Sources */,
 				FC79020924F0C2E30063DE3F /* CityCell.swift in Sources */,
 				FC79020D24F0D2E90063DE3F /* CityModel.swift in Sources */,
 				3BED610924F4A1F20099A7A3 /* WeatherListViewController.swift in Sources */,
@@ -360,7 +362,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				3B67170624EE6BCA003750B5 /* FinStructureTests.swift in Sources */,
-				FC0FB8AF2532A8C700A53278 /* CoreData.swift in Sources */,
 				FC0FB8872532924D00A53278 /* NotesInfo.xcdatamodeld in Sources */,
 				FC0FB8B32532AAB500A53278 /* NotesTableViewCell.swift in Sources */,
 			);
@@ -371,7 +372,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				3B67171124EE6BCA003750B5 /* FinStructureUITests.swift in Sources */,
-				FC0FB8B02532A8C700A53278 /* CoreData.swift in Sources */,
 				FC0FB8882532924D00A53278 /* NotesInfo.xcdatamodeld in Sources */,
 				FC0FB8B42532AAB500A53278 /* NotesTableViewCell.swift in Sources */,
 			);
