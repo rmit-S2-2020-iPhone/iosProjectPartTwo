@@ -56,6 +56,7 @@ class CityInfoViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        //print("CITY \(city)")
         setUI()
         
     }
