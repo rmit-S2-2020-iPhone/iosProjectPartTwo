@@ -270,7 +270,7 @@
                     </view>
                     <navigationItem key="navigationItem" title="Saved Locations" id="eIm-YO-DZU">
                         <barButtonItem key="rightBarButtonItem" systemItem="search" id="rT6-lu-PCS">
-                            <color key="tintColor" cocoaTouchSystemColor="darkTextColor"/>
+                            <color key="tintColor" red="0.1333333333" green="0.3921568627" blue="0.1333333333" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <connections>
                                 <segue destination="DNM-gp-Aoj" kind="show" id="Dxv-wu-TTy"/>
                             </connections>
