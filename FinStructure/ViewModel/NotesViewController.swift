@@ -11,7 +11,7 @@
  
  class NotesViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate {
     
-
+    
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet var labelText: UILabel!
     @IBOutlet weak var notesTableView: UITableView!
