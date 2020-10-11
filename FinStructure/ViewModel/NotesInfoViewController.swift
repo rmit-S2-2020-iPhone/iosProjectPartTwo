@@ -15,7 +15,7 @@ class NotesInfoViewController: UIViewController {
     @IBOutlet weak var titleText: UITextField!
     @IBOutlet weak var dateText: UITextField!
     
-    var note: Note?
+    var note: NotesInfo?
     
     override func viewDidLoad() {
         super.viewDidLoad()
