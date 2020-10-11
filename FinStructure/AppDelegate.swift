@@ -17,6 +17,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        //If DidSee is false, set DidSee to true and show onBoardingScreen
+        //Else return true, which show TabBarController screen where it is set to be the Initial View Controller
+        if !UserDefaults.standard.bool(forKey: "didSee") {
+            
+            UserDefaults.standard.set(true, forKey: "didSee")
+            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+            let viewController = storyboard.instantiateViewController(withIdentifier: "onBoarding")
+            self.window?.rootViewController = viewController
+            self.window?.makeKeyAndVisible()
+        }
         return true
     }
 
