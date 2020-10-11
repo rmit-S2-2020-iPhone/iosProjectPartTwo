@@ -39,6 +39,8 @@ class CityInfoViewController: UIViewController {
     
     var city: CityModel?
     
+    var dayArray: [CityModel.Daily] = []
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "UnwindToOneSegue" {
             let destVC = segue.destination as! CityViewController
@@ -56,7 +58,10 @@ class CityInfoViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        //print("CITY \(city)")
+        if let currentCity = city {
+            dayArray = currentCity.daily
+        }
+        print("CITY \(dayArray)")
         setUI()
         
     }
@@ -86,7 +91,25 @@ class CityInfoViewController: UIViewController {
 
 
 // MARK: Prepare for unwind segue
-extension CityInfoViewController {
+extension CityInfoViewController: UITableViewDelegate, UITableViewDataSource {
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 50
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+         return dayArray.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "cityInfoCell", for: indexPath) as! CityInfoCell
+        
+        cell.dayLabel.text = dayArray[indexPath.row].daysInWeek
+        cell.dayMaxTempLabel.text = String(dayArray[indexPath.row].temp[0])
+        cell.dayMinTempLabel.text = String(dayArray[indexPath.row].temp[1])
+        cell.dayWeatherImage.image = UIImage(named: dayArray[indexPath.row].dailyImage)
+        return cell
+    }
+    
     
 }
 

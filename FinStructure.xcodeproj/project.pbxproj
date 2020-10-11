@@ -30,6 +30,7 @@
 		FC0FB8B32532AAB500A53278 /* NotesTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC0FB8B12532AAB500A53278 /* NotesTableViewCell.swift */; };
 		FC0FB8B42532AAB500A53278 /* NotesTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC0FB8B12532AAB500A53278 /* NotesTableViewCell.swift */; };
 		FC0FB8B62532C30800A53278 /* OnBoardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC0FB8B52532C30800A53278 /* OnBoardingViewController.swift */; };
+		FC0FB8B82533157B00A53278 /* CityInfoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC0FB8B72533157B00A53278 /* CityInfoCell.swift */; };
 		FC79020924F0C2E30063DE3F /* CityCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC79020824F0C2E30063DE3F /* CityCell.swift */; };
 		FC79020B24F0C5D30063DE3F /* CityInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC79020A24F0C5D30063DE3F /* CityInfoViewController.swift */; };
 		FC79020D24F0D2E90063DE3F /* CityModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC79020C24F0D2E90063DE3F /* CityModel.swift */; };
@@ -80,6 +81,7 @@
 		FC0FB8AD2532A8C700A53278 /* CoreData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreData.swift; sourceTree = "<group>"; };
 		FC0FB8B12532AAB500A53278 /* NotesTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotesTableViewCell.swift; sourceTree = "<group>"; };
 		FC0FB8B52532C30800A53278 /* OnBoardingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnBoardingViewController.swift; sourceTree = "<group>"; };
+		FC0FB8B72533157B00A53278 /* CityInfoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CityInfoCell.swift; sourceTree = "<group>"; };
 		FC79020824F0C2E30063DE3F /* CityCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CityCell.swift; path = FinStructure/Model/CityCell.swift; sourceTree = SOURCE_ROOT; };
 		FC79020A24F0C5D30063DE3F /* CityInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CityInfoViewController.swift; sourceTree = "<group>"; };
 		FC79020C24F0D2E90063DE3F /* CityModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CityModel.swift; sourceTree = "<group>"; };
@@ -175,6 +177,7 @@
 				FC0FB8B12532AAB500A53278 /* NotesTableViewCell.swift */,
 				0AD44FE324F685F100642325 /* NotesModel.swift */,
 				FC0FB8842532924D00A53278 /* NotesInfo.xcdatamodeld */,
+				FC0FB8B72533157B00A53278 /* CityInfoCell.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -337,6 +340,7 @@
 			files = (
 				0A50A93A25015D3600A48021 /* EditNotesViewController.swift in Sources */,
 				FCA72E2A2528514400BFB276 /* WeatherManager.swift in Sources */,
+				FC0FB8B82533157B00A53278 /* CityInfoCell.swift in Sources */,
 				0AD44FE624F6863F00642325 /* AddNotesViewController.swift in Sources */,
 				FC0FB8AE2532A8C700A53278 /* CoreData.swift in Sources */,
 				FC0FB8B62532C30800A53278 /* OnBoardingViewController.swift in Sources */,
