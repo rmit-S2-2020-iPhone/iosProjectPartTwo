@@ -39,9 +39,10 @@ class FinStructureUITests: XCTestCase {
         
         let app = XCUIApplication()
         app.tabBars.buttons["Notes"].tap()
-        let searchNote=app.searchFields["Search Notes"]
-        searchNote.tap()
-        XCTAssertTrue(searchNote.exists)
+        let tapone=app.textFields["Notes Title"]
+        tapone.tap()
+        XCTAssertTrue(tapone.exists)
+        
         
     }
     
@@ -56,9 +57,6 @@ class FinStructureUITests: XCTestCase {
         let alert=app.alerts["City Not Found"]
         XCTAssertTrue(alert.exists)
         alert.buttons["Try again"].tap()
-        
-        
-        
         
     }
     // UI Test for Navigating Different Scences
@@ -80,16 +78,9 @@ class FinStructureUITests: XCTestCase {
         
     }
     
-    
     override func tearDown() {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
     }
-    
-    func testExample() {
-        // Use recording to get started writing UI tests.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
-    }
-    
     
     
 }
