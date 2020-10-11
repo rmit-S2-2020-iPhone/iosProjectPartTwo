@@ -15,9 +15,9 @@ class FinStructureTests: XCTestCase {
     
     func test1(){
         //Test Initialization
-        let testNo1 = WeatherManager()
+        let testNo1=WeatherManager()
         //Test Outcome
-        let result1 = testNo1.fetchWeather(latitude: 122, longitude: 34)
+        let result1=testNo1.fetchWeather(latitude: 122, longitude: 34)
         //Assertion
         XCTAssertNotNil(result1)
         
